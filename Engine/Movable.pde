@@ -11,8 +11,14 @@ public class MovableCircle extends Movable //CIRCLE IS BOUNDING BOX
    protected float size;
    protected color fill;
    
-   public boolean grab=false;
-   public boolean drag;
+   public boolean selected    =false;
+   public boolean drag        =false;
+   public boolean moving      =false;
+   public boolean targetReached=false;
+   
+   protected PVector target;
+   
+   protected color selectedColor = color(50,200,20);
    
    public  MovableCircle(int _id)
    {
@@ -49,19 +55,31 @@ public class MovableCircle extends Movable //CIRCLE IS BOUNDING BOX
       pushMatrix();
         translate(pos.x, pos.y);
         //rotate(rot);
-        stroke(0);
+        stroke(selected ? selectedColor : 0);
         strokeWeight(1);
-        fill(fill);
+        fill(mouseOver ? 20 : fill);
         ellipse(0,0,size,size);
       popMatrix();
    }
    
+   
    @Override
    public void update(double delta)
    {  
-      PVector mouse = new PVector(mouseX, mouseY);  //mouse pos
-      if(!isHit)follow(mouse, delta);
-      
+      hitMouse();
+      if(selected && !mouseOver && mouseClicked && !targetReached)
+      {
+         target = new PVector(mouseX, mouseY);
+      }
+      if(target!=null)
+      {
+         follow(target, delta);
+         
+         if(target.dist(pos)<1)
+         {
+           target=null;
+         }
+      }
       //PVector rand = new PVector(random(-1,1),random(-1,1));
       //if(!isHit)walk(rand);
       //PVector grav = new PVector(0,0.981);
@@ -130,6 +148,10 @@ public class MovableCircle extends Movable //CIRCLE IS BOUNDING BOX
      {
         fill = color(255,0,0);
         mouseOver = true;
+        if (mouseClicked)
+        {
+            selected = !selected;
+        }
      }else{
         mouseOver = false;  
      }

@@ -1,19 +1,28 @@
-import javax.media.opengl.*;
+
 import processing.opengl.*;
+import com.jogamp.opengl.*;
 
 float a; 
 float []midPointx;
 float []midpointy;
 
 void setup() {
-  size(400, 400, OPENGL);
+  size(400, 400, P3D);
+  
 }
 int r=width/2;
+
 void draw() {
-  background(255,0,0);
   
-  PGraphicsOpenGL pgl = (PGraphicsOpenGL) g;  // g may change
-  GL gl = pgl.beginGL();  // always use the GL object returned by beginGL
+  background(20,20,20);
+  
+  PGraphicsOpenGL pgraph = (PGraphicsOpenGL) g;  // g may change
+  
+  PJOGL pgl = (PJOGL)pgraph.pgl;
+  
+  GL gl = pgl.gl;
+  
+  gl.beginGL();  // always use the GL object returned by beginGL
   
 
   gl.glTranslatef(width/2, height/2, 0);
@@ -77,6 +86,7 @@ void draw() {
   pgl.endGL();
   
   //a += 0.9;
+  
 }
 
 
