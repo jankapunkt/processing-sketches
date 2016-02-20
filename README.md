@@ -1,4 +1,4 @@
-# processing-sketches
+# Processing Sketches and Snippets
 A collection of various processing sketches. Ideal as starting points or for code reuse.
 
 ##Installation Requirements
