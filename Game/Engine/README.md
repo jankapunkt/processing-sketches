@@ -1,4 +1,4 @@
-#2D Game Engine Skelettin
+#2D Game Engine Base
 
 Aims to become a simple and easy to use 2d game engine. For now it is a good base and starting point for simple 2d games with focus on collision detection and performance.
 
