@@ -46,6 +46,7 @@ public class TileManager
     grid = new Tile[gSize*gSize];
     gridSize = gSize;
   }
+  
 
   public void addImage(String path)
   {
@@ -72,7 +73,7 @@ public class TileManager
   {
     
     println(index+" "+GRID_SIZE*GRID_SIZE);
-    if (grid[index] == null)
+    if (index < 0 || index > grid.length-1 || grid[index] == null)
     {
       return;
     }

@@ -15,14 +15,8 @@ public static final String TEX_WATER_D   = "water_deep.png";
 public static final String TEX_WATER_F   = "water_flat.png";
 
 
-/* neighbour tile indices in grid */
-public static final int NEI_LEFT   = -1;
-public static final int NEI_CEN    =  0;
-public static final int NEI_RIGHT  =  1; 
 
-public static final int NEI_TOP    = -1;
-public static final int NEI_MID    =  0;
-public static final int NEI_BOT    =  1;
+
 
 
 public TileManager tileManager;
@@ -50,32 +44,13 @@ void setup()
       }  
     }
     
-    int[] gen = generate_drunkardWalk(GRID_SIZE/2, GRID_SIZE/2, 1000, GRID_SIZE);
+    //int[] gen = generate_drunkardWalk(GRID_SIZE/2, GRID_SIZE/2, 1000, GRID_SIZE);
+    int[] gen = generate_cellularAutomata(GRID_SIZE);
     for (int j=0;j<gen.length;j++)
     {
        tileManager.addTile(gen[j],0,TEX_WATER_F);
     }
 
-    
-    offsetX = 0;
-    offsetY = 0;
-    
-    
-    int[] a = new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-    
-    int index = 11;
-    println("------------------------");
-    println("neighbours for: "+a[index]);
-    
-    print(getNeighbour(index, 4, -1,  -1)+"\t");
-    print(getNeighbour(index, 4, -1,  0)+"\t");
-    println(getNeighbour(index, 4, -1,  1)+"\t");
-    print(getNeighbour(index, 4,  0, -1)+"\t");
-    print("["+index+"]"+"\t");
-    println(getNeighbour(index, 4,  0,  1)+"\t");
-    print(getNeighbour(index, 4,  1, -1)+"\t");
-    print(getNeighbour(index, 4,  1,  0)+"\t");
-    print(getNeighbour(index, 4,  1,  1)+"\t");
   
 }
 
@@ -119,49 +94,4 @@ void mouseWheel(MouseEvent event) {
   float w = event.getCount();
   scale = scale + w/10;
   println(scale+" "+w);
-}
-
-
-public void print_neightbours(int index, int gridWidth)
-{
-  print  ( "[" + get_neighbour(index, gridWidth, NEI_TOP, NEI_LEFT) +"]" + "\t");
-  print  ( "[" + get_neighbour(index, gridWidth, NEI_TOP, NEI_CEN) +"]" + "\t");
-  println( "[" + get_neighbour(index, gridWidth, NEI_TOP, NEI_RIGHT) +"]" + "\t");
-  
-  print  ( "[" + get_neighbour(index, gridWidth, NEI_MID, NEI_LEFT) +"]" + "\t");
-  print  ( "[" + get_neighbour(index, gridWidth, NEI_MID, NEI_CEN) +"]" + "\t");
-  println( "[" + get_neighbour(index, gridWidth, NEI_MID, NEI_RIGHT) +"]" + "\t");
-  
-  print  ( "[" + get_neighbour(index, gridWidth, NEI_BOT, NEI_LEFT) +"]" + "\t");
-  print  ( "[" + get_neighbour(index, gridWidth, NEI_BOT, NEI_MID) +"]" + "\t");
-  println( "[" + get_neighbour(index, gridWidth, NEI_BOT, NEI_RIGHT) +"]" + "\t");
-}
-
-
-public int get_neighbour(int index, int gridWidth, int vert, int hor)
-{
-   int i = get_i(index, gridWidth) + vert;
-   int j = get_j(index, gridWidth) + hor;
-   //print(i+" "+j+" "+isInGrid(i,j,gridWidth, gridWidth));
-   if (isInGrid(i,j,gridWidth, gridWidth))
-     return i * gridWidth + j; 
-   return -1;
-}
-
-
-public boolean isInGrid(int i, int j, int gridWidth, int gridHeight)
-{
-   return (i >= 0 && j >= 0 && i < gridWidth && j <  gridHeight);
-}
-
-
-public int get_i(int index, int gridWidth)
-{
-  return floor((index / gridWidth));
-}
-
-
-public int get_j(int index, int gridWidth)
-{
-   return index % gridWidth;
 }

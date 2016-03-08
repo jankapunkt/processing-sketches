@@ -59,47 +59,59 @@ public static int[] generate_randomRoomPlacement()
 public static int[] generate_cellularAutomata(int gridSize)
 {
 
-  
   int percentFill     = 40;
   int firstIteration  = 4;
   int firstCutoff1    = 5;
   int firstCutoff2    = 2;
   int secondteration  = 3;
-  int secondCutoff1    = 5;
-  int secondCutoff2    = -1;
+  int secondCutoff1   = 5;
+  int secondCutoff2   = -1;
   
   
   //map sources and results
   int[] map = new int[gridSize*gridSize]; //marked positions in the grid
-  int[] results = new int[Math.round(map.length*percentFill/100)];
+  int[] results = new int[map.length]; //Math.round(map.length*percentFill/100)]; //use normal distribution for percent fill
   
   int len = map.length;
-  int i=0,j=0;
   
-  for(i=0;i<len;i++)
+  for(int i=0;i<len;i++)
   {
-     map[i] = (int)Math.round(Math.random());
+     map[i] = (int)Math.round(rand(0,1));
+     results[i] = -1;
   }
-  
-  
-  for(i=0;i<firstIteration;i++)
-  {
+  results = cellularIteration(map, results, firstIteration, firstCutoff1, firstCutoff2, gridSize);
+  results = cellularIteration(map, results, secondteration, secondCutoff1, secondCutoff2, gridSize);
+  return results;
+}
+
+
+public static int[] cellularIteration(int[] source, int[] results, int iterations, int cutoff1, int cutoff2, int gridSize)
+{
+    int len = source.length;
+    int i=0,j=0;
+    for(i=0;i<iterations;i++)
+    {
       for (j=0;j<len;j++)
       {
-        //1. A tile T becomes a wall if 5 or more of the tiles within one step of T are walls.
-        //2. A tile T becomes a wall if 2 or less of the tiles within two step of T are walls.
-        int neighbour_topleft    = getNeighbour(j, gridSize, -1, -1);
-        int neighbour_topMid     = getNeighbour(j, gridSize, -1, -1);
-        int neighbour_topRight   = getNeighbour(j, gridSize, -1, -1);
-        int neighbour_midleft    = getNeighbour(j, gridSize, -1, -1);
-        int neighbour_midMid     = getNeighbour(j, gridSize, -1, -1);
-        int neighbour_midRight   = getNeighbour(j, gridSize, -1, -1);
-        int neighbour_botLeft    = getNeighbour(j, gridSize, -1, -1);
-        int neighbour_botMid     = getNeighbour(j, gridSize, -1, -1);
-        int neighbour_botRight   = getNeighbour(j, gridSize, -1, -1);
+        int[] alln = get_allNeighbours(j, gridSize);
+        int sum=0;
+        for(int n : alln)
+        {
+           if (n >-1 && source[n]==1)sum++;
+        }
+        // T is already filled *and* at least 4 of its neighbors are filled
+        if (source[j] == 1 && sum >= cutoff1)
+        {
+            results[j] = j;
+            source[j]  = 1;
+        }else if(source[j]==0 && sum >= cutoff2) {// T is not yet filled *and* at least 5 of its neighbors are filled
+            results[j] = j;
+            source[j]  = 1;
+        }else{
+           results[j] = -1;
+           source[j]=0;
+        }
       }
-  }
-  
-  
-   return null;
+    }
+    return results;
 }
