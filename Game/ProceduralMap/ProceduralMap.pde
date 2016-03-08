@@ -14,6 +14,17 @@ public static final String TEX_GROUND    = "ground.png";
 public static final String TEX_WATER_D   = "water_deep.png";
 public static final String TEX_WATER_F   = "water_flat.png";
 
+
+/* neighbour tile indices in grid */
+public static final int NEI_LEFT   = -1;
+public static final int NEI_CEN    =  0;
+public static final int NEI_RIGHT  =  1; 
+
+public static final int NEI_TOP    = -1;
+public static final int NEI_MID    =  0;
+public static final int NEI_BOT    =  1;
+
+
 public TileManager tileManager;
 
 public float offsetX,offsetY;
@@ -108,4 +119,49 @@ void mouseWheel(MouseEvent event) {
   float w = event.getCount();
   scale = scale + w/10;
   println(scale+" "+w);
+}
+
+
+public void print_neightbours(int index, int gridWidth)
+{
+  print  ( "[" + get_neighbour(index, gridWidth, NEI_TOP, NEI_LEFT) +"]" + "\t");
+  print  ( "[" + get_neighbour(index, gridWidth, NEI_TOP, NEI_CEN) +"]" + "\t");
+  println( "[" + get_neighbour(index, gridWidth, NEI_TOP, NEI_RIGHT) +"]" + "\t");
+  
+  print  ( "[" + get_neighbour(index, gridWidth, NEI_MID, NEI_LEFT) +"]" + "\t");
+  print  ( "[" + get_neighbour(index, gridWidth, NEI_MID, NEI_CEN) +"]" + "\t");
+  println( "[" + get_neighbour(index, gridWidth, NEI_MID, NEI_RIGHT) +"]" + "\t");
+  
+  print  ( "[" + get_neighbour(index, gridWidth, NEI_BOT, NEI_LEFT) +"]" + "\t");
+  print  ( "[" + get_neighbour(index, gridWidth, NEI_BOT, NEI_MID) +"]" + "\t");
+  println( "[" + get_neighbour(index, gridWidth, NEI_BOT, NEI_RIGHT) +"]" + "\t");
+}
+
+
+public int get_neighbour(int index, int gridWidth, int vert, int hor)
+{
+   int i = get_i(index, gridWidth) + vert;
+   int j = get_j(index, gridWidth) + hor;
+   //print(i+" "+j+" "+isInGrid(i,j,gridWidth, gridWidth));
+   if (isInGrid(i,j,gridWidth, gridWidth))
+     return i * gridWidth + j; 
+   return -1;
+}
+
+
+public boolean isInGrid(int i, int j, int gridWidth, int gridHeight)
+{
+   return (i >= 0 && j >= 0 && i < gridWidth && j <  gridHeight);
+}
+
+
+public int get_i(int index, int gridWidth)
+{
+  return floor((index / gridWidth));
+}
+
+
+public int get_j(int index, int gridWidth)
+{
+   return index % gridWidth;
 }
