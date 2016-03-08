@@ -60,12 +60,12 @@ public static int[] generate_cellularAutomata(int gridSize)
 {
 
   int percentFill     = 40;
-  int firstIteration  = 4;
-  int firstCutoff1    = 5;
-  int firstCutoff2    = 2;
+  int firstIteration  = 1;
+  int firstCutoff1    = 4;
+  int firstCutoff2    = 5;
   int secondteration  = 3;
-  int secondCutoff1   = 5;
-  int secondCutoff2   = -1;
+  int secondCutoff1   = 4;
+  int secondCutoff2   = 5;
   
   
   //map sources and results
@@ -79,8 +79,8 @@ public static int[] generate_cellularAutomata(int gridSize)
      map[i] = (int)Math.round(rand(0,1));
      results[i] = -1;
   }
-  results = cellularIteration(map, results, firstIteration, firstCutoff1, firstCutoff2, gridSize);
-  results = cellularIteration(map, results, secondteration, secondCutoff1, secondCutoff2, gridSize);
+  cellularIteration(map, results, firstIteration, firstCutoff1, firstCutoff2, gridSize);
+  cellularIteration(map, results, secondteration, secondCutoff1, secondCutoff2, gridSize);
   return results;
 }
 
