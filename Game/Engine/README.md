@@ -8,7 +8,8 @@ Aims to become a simple and easy to use 2d game engine. For now it is a good bas
 ### Implemented
 
 - QuadTree
-- Simple collisions (yet buggy)
+- Simple collisions
+- delta time per frame 
 
 
 ### Objectives
