@@ -39,7 +39,7 @@ void setup()
       }  
     }
     
-    int[] gen = generate_drunkardWalk(GRID_SIZE/2, GRID_SIZE/2, 2000, GRID_SIZE);
+    int[] gen = generate_drunkardWalk(GRID_SIZE/2, GRID_SIZE/2, 1000, GRID_SIZE);
     for (int j=0;j<gen.length;j++)
     {
        tileManager.addTile(gen[j],0,TEX_WATER_F);
@@ -48,6 +48,24 @@ void setup()
     
     offsetX = 0;
     offsetY = 0;
+    
+    
+    int[] a = new int[]{0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+    
+    int index = 11;
+    println("------------------------");
+    println("neighbours for: "+a[index]);
+    
+    print(getNeighbour(index, 4, -1,  -1)+"\t");
+    print(getNeighbour(index, 4, -1,  0)+"\t");
+    println(getNeighbour(index, 4, -1,  1)+"\t");
+    print(getNeighbour(index, 4,  0, -1)+"\t");
+    print("["+index+"]"+"\t");
+    println(getNeighbour(index, 4,  0,  1)+"\t");
+    print(getNeighbour(index, 4,  1, -1)+"\t");
+    print(getNeighbour(index, 4,  1,  0)+"\t");
+    print(getNeighbour(index, 4,  1,  1)+"\t");
+  
 }
 
 

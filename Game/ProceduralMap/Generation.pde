@@ -16,7 +16,7 @@
 public static int[] generate_drunkardWalk(int initialPosX, int initialPosY, int size, int gridSize)
 {
   int count=0;  
-  byte[] marks = new byte[gridSize*gridSize];
+  byte[] marks = new byte[gridSize*gridSize]; //marked positions in the grid
   
   int[] results = new int[size];
   
@@ -28,15 +28,13 @@ public static int[] generate_drunkardWalk(int initialPosX, int initialPosY, int 
       int pos = currentY + (currentX*gridSize);
       if (marks[pos] == 0x00)
       {
-        
-        
         marks[pos] = 0x01;  //mark position as filled
         results[count] = pos; //add to results
         count++;
       }
       
       //anyway look for a new direction
-      int dir = (int)rand(0,3);
+      int dir = (int)(rand(0,3));
       if (dir == 0)currentX--;
       if (dir == 1)currentX++;
       if (dir == 2)currentY--;
@@ -47,7 +45,61 @@ public static int[] generate_drunkardWalk(int initialPosX, int initialPosY, int 
 }
 
 
-public static double rand(int min, int max)
+public static int[] generate_randomRoomPlacement()
 {
-    return Math.random() * (max - min) + min;
+   return null; 
+}
+
+
+
+/**
+    http://www.futuredatalab.com/proceduraldungeon/
+**/
+
+public static int[] generate_cellularAutomata(int gridSize)
+{
+
+  
+  int percentFill     = 40;
+  int firstIteration  = 4;
+  int firstCutoff1    = 5;
+  int firstCutoff2    = 2;
+  int secondteration  = 3;
+  int secondCutoff1    = 5;
+  int secondCutoff2    = -1;
+  
+  
+  //map sources and results
+  int[] map = new int[gridSize*gridSize]; //marked positions in the grid
+  int[] results = new int[Math.round(map.length*percentFill/100)];
+  
+  int len = map.length;
+  int i=0,j=0;
+  
+  for(i=0;i<len;i++)
+  {
+     map[i] = (int)Math.round(Math.random());
+  }
+  
+  
+  for(i=0;i<firstIteration;i++)
+  {
+      for (j=0;j<len;j++)
+      {
+        //1. A tile T becomes a wall if 5 or more of the tiles within one step of T are walls.
+        //2. A tile T becomes a wall if 2 or less of the tiles within two step of T are walls.
+        int neighbour_topleft    = getNeighbour(j, gridSize, -1, -1);
+        int neighbour_topMid     = getNeighbour(j, gridSize, -1, -1);
+        int neighbour_topRight   = getNeighbour(j, gridSize, -1, -1);
+        int neighbour_midleft    = getNeighbour(j, gridSize, -1, -1);
+        int neighbour_midMid     = getNeighbour(j, gridSize, -1, -1);
+        int neighbour_midRight   = getNeighbour(j, gridSize, -1, -1);
+        int neighbour_botLeft    = getNeighbour(j, gridSize, -1, -1);
+        int neighbour_botMid     = getNeighbour(j, gridSize, -1, -1);
+        int neighbour_botRight   = getNeighbour(j, gridSize, -1, -1);
+      }
+  }
+  
+  
+   return null;
 }
