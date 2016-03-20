@@ -15,12 +15,39 @@ class Grid
       }
    }
    
-   public void fill(int[] source)
+   public void flush()
+   {
+      for(int i=0;i<gridSize;i++)
+      {
+         cells[i].isActive = false; 
+      }
+   }
+   
+   public int[] getActiveCells()
+   {
+      int[] result = new int[gridSize];
+      for (int i=0;i<gridSize;i++)
+      {
+         result[i] = cells[i].isActive ? 1 : 0; 
+      }
+      return result;
+   }
+   
+   public void fill_grid(int[] source)
+   {
+      for(int i=0;i<gridSize;i++)
+      {
+         cells[i].isActive = source[i] == 1 ? true : false; 
+      }
+   }
+   
+   public void fill_indices(int[] source)
    {
        for(int i=0;i<source.length;i++)
        {
           int idx = source[i];
-          if (idx >= 0 && idx <= gridSize-1)this.cells[idx].isActive = true; 
+          if (idx >= 0 && idx <= gridSize-1)
+              cells[idx].isActive = true; 
        }
    }
    
