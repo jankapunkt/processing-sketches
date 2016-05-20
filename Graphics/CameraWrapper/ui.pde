@@ -40,7 +40,7 @@ void keyPressed() {
     case 51:
         if (!(controller instanceof IconosphericCameraController))
         {
-            controller = new IconosphericCameraController(cam, controller.up, controller.cen, controller.pos);
+            controller = new IconosphericCameraController(cam, controller.up, controller.cen, controller.pos.add(0,50,-50));
         }
         break;
     case 52:

@@ -17,8 +17,9 @@ class EgoCameraController extends CameraController
     }
 
     @Override
-        public void setDefaults()
+    public void setDefaults()
     {
+        noCursor();
         //set default vectors
         this.up.set(cam.getUp());
         this.cen.set(cam.getTarget());

@@ -6,6 +6,13 @@ public PVector[] boxes;
 
 public PFont font;
 
+public final int WIDTH  = 1200;
+public final int HEIGHT = 600;
+
+public final int XCENTER = WIDTH/2;
+public final int YCENTER = HEIGHT/2;
+
+
 //-----------------------------------------------------------//
 
 void setup()

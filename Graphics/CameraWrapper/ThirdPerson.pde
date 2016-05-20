@@ -16,8 +16,9 @@ class ThirdPersonCameraController extends CameraController
     }
 
     @Override
-        public void setDefaults()
+    public void setDefaults()
     {
+        noCursor();
         //set default vectors
         this.up.set(0.0f, -1.0f, 0.0f);
         this.cen.set(cam.getTarget());
@@ -96,7 +97,7 @@ class ThirdPersonCameraController extends CameraController
     }
 
     @Override
-        public void updateMouse()
+    public void updateMouse()
     {
         if ((wheel==0 && !mousePressed) || pmouseX-mouseX == 0)
             return;
