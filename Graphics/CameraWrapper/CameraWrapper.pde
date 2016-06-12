@@ -6,6 +6,8 @@ public PVector[] boxes;
 
 public PFont font;
 
+public MessageManager messages;
+
 //-----------------------------------------------------------//
 
 void setup()
@@ -16,6 +18,7 @@ void setup()
     noCursor();
 
     //runTestCamera();
+    
 
     //create camera and control
     cam = new Cam();
@@ -24,13 +27,15 @@ void setup()
     //text and font
     font = createFont("Dialog.plain-48.wlv", 48);
     textFont(font);
-
+    messages = new MessageManager(font,280, cam);
+    
     //create some positions
     boxes = new PVector[25];
     for (int i=0; i<25; i++)
     {
         boxes[i] = new PVector(-(i*80) + random(0,150), 0, -(i*80) + random(0,150));
     }
+    messages.add("Setup complete");
 }
 
 //-----------------------------------------------------------//
@@ -39,6 +44,8 @@ void draw()
 {
 
     background(180);
+  
+    
     //drawDebug();
     //update
     controller.update();
@@ -57,6 +64,14 @@ void draw()
         box(20, 20, 20);
         popMatrix();
     }
+    
+     // 3D code
+ 
+    hint(DISABLE_DEPTH_TEST);
+    camera();
+    noLights();
+    messages.display();
+    hint(ENABLE_DEPTH_TEST);
 }
 
 //-----------------------------------------------------------//
