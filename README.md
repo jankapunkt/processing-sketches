@@ -1,3 +1,6 @@
+Note: For any issues, contact me via [info@jankuester.com](mailto:info@jankuester.com)
+
+
 # Processing Sketches and Snippets
 A collection of various processing sketches. Ideal as starting points or for code reuse.
 
