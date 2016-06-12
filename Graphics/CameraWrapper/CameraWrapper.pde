@@ -64,14 +64,9 @@ void draw()
         box(20, 20, 20);
         popMatrix();
     }
-    
-     // 3D code
- 
-    hint(DISABLE_DEPTH_TEST);
-    camera();
-    noLights();
+
     messages.display();
-    hint(ENABLE_DEPTH_TEST);
+    
 }
 
 //-----------------------------------------------------------//

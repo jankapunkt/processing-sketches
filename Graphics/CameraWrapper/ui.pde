@@ -45,6 +45,11 @@ class MessageManager
         int size = _messages.size();
         if (size <= 0)
             return;
+        
+        hint(DISABLE_DEPTH_TEST);
+        camera();
+        noLights();
+         
         for (int i = size-1; i>=0;i--)
         {
            
@@ -59,6 +64,7 @@ class MessageManager
             m.update();
             m.display(20,50 + i*14);
         }
+        hint(ENABLE_DEPTH_TEST);
     }
 }
 
