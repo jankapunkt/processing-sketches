@@ -15,6 +15,8 @@ void setup()
     smooth();
     noCursor();
 
+    //runTestCamera();
+
     //create camera and control
     cam = new Cam();
     controller = new ThirdPersonCameraController(cam);

@@ -34,7 +34,7 @@ void keyPressed()
       grid.fill_indices(generate_drunkardWalk(20, 10, 300, CELLS,false));
       break;
     case 'r':
-      grid.fill_indices(generate_random(50,CELLS));
+      grid.fill_indices(generate_random(10,CELLS));
       break;
       
     case 'c':

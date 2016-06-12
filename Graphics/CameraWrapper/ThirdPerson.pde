@@ -16,7 +16,7 @@ class ThirdPersonCameraController extends CameraController
     }
 
     @Override
-        public void setDefaults()
+    public void setDefaults()
     {
         //set default vectors
         this.up.set(0.0f, -1.0f, 0.0f);
@@ -24,7 +24,7 @@ class ThirdPersonCameraController extends CameraController
         this.pos.set(70.0f, 35.0f, 120.0f);
 
         //detault speed values
-        rot=0.005f;
+        rot=0.001f;
         zoom=0.8f;
         zoomp = 0.08f;
         cam.setMode(Cam.MODE_PERSPECTIVE);
@@ -33,7 +33,7 @@ class ThirdPersonCameraController extends CameraController
 
 
     @Override
-        public void updateKeys()
+    public void updateKeys()
     {
         if (!keyPressed)return;
         moveDir.set(0, 0, 0);
@@ -96,7 +96,7 @@ class ThirdPersonCameraController extends CameraController
     }
 
     @Override
-        public void updateMouse()
+    public void updateMouse()
     {
         if ((wheel==0 && !mousePressed) || pmouseX-mouseX == 0)
             return;
@@ -111,7 +111,7 @@ class ThirdPersonCameraController extends CameraController
         {
             float dx = (pmouseX-mouseX)*rot;
             float dy = (pmouseY-mouseY)*rot;
-            cam.rotAround(cam.getTarget(), cam.getRight(), dy);
+            cam.rotAroundRight(dy);
             cam.rotYAround(dx);
         }
 

@@ -13,7 +13,7 @@ class OrthographicCameraController extends CameraController
     }
 
     @Override
-        public void setDefaults()
+    public void setDefaults()
     {
         //set default vectors
         this.up.set(cam.getUp());
@@ -28,12 +28,8 @@ class OrthographicCameraController extends CameraController
     }
 
     @Override
-        public void updateKeys()
-    {
-    }
+    public void updateKeys(){}
 
     @Override
-        public void updateMouse()
-    {
-    }
+    public void updateMouse(){}
 }
