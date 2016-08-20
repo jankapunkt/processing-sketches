@@ -13,7 +13,7 @@ class IconosphericCameraController extends CameraController
     }
 
     @Override
-        public void setDefaults()
+    public void setDefaults()
     {
         //set default vectors
         this.up.set(cam.getUp());
@@ -25,15 +25,17 @@ class IconosphericCameraController extends CameraController
         zoom=0.8f;
         zoomp = 0.08f;
         cam.setMode(Cam.MODE_PERSPECTIVE);
+        
+        cursor(HAND);
     }
 
     @Override
-        public void updateKeys()
+    public void updateKeys()
     {
     }
 
     @Override
-        public void updateMouse()
+    public void updateMouse()
     {
     }
 }
