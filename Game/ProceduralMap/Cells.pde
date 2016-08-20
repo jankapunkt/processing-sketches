@@ -11,7 +11,7 @@ class Grid
         cells = new Cell[gridSize];
         for (int i=0; i<gridSize; i++)
         {
-            cells[i] = new Cell(i, floor(i / halfSize), i % halfSize, screenSize/halfSize);
+            cells[i] = new Cell(i, get_i(i, halfSize), get_j(i, halfSize), screenSize/halfSize);
         }
     }
 
@@ -33,16 +33,20 @@ class Grid
         return result;
     }
 
-    public void fill_grid(int[] source)
+    public void setCells(int[] source) throws Exception
     {
+        if (source.length > gridSize)
+            throw new Exception("Gridsize is not backed by source");
         for (int i=0; i<gridSize; i++)
         {
             cells[i].isActive = source[i] == 1 ? true : false;
         }
     }
 
-    public void fill_indices(int[] source)
+    public void setCellsByIndices(int[] source) throws Exception
     {
+        if (source.length > gridSize)
+            throw new Exception("Gridsize is not backed by source");
         for (int i=0; i<source.length; i++)
         {
             int idx = source[i];
@@ -52,18 +56,11 @@ class Grid
     }
 
 
-    public void update()
+    public void update(float x, float y, boolean msPressed, int msButton)
     {
-        float x = mouseX;
-        float y = mouseY;
         for (int i=0; i<gridSize; i++)
         {
-            Cell c = cells[i];
-            if (!started)
-            {
-                c.update(x, y);
-            } else {
-            }
+            cells[i].update(x, y, msPressed, msButton);
         }
     }
 
@@ -104,18 +101,19 @@ class Cell
         this.ypos = yindex*csize;
     }
 
-    public void update(float x, float y)
+    public void update(float x, float y, boolean msPressed, int msButton)
     {
         over = mouseOver(x, y);
-        if (over && mousePressed )
+        if (over && msPressed )
         {
-            isActive = mouseButton == LEFT ? true : false;
+            isActive = msButton == LEFT ? true : false;
         }
     }
 
     private boolean mouseOver(float x, float y)
     {
-        return  x >= xpos && x < xpos + csize &&
+        return  
+            x >= xpos && x < xpos + csize &&
             y >= ypos && y < ypos + csize;
     }
 
@@ -155,27 +153,109 @@ public class TestGrid extends TestBase
 
     public void test_flush() throws Exception
     {
-        throw new Exception("not yet implemented");
+        Grid grid = new Grid(9, 3);
+        grid.setCells(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1});
+
+        Cell[] cells = grid.cells;
+        asserter.notNull(cells, "unexpected cells array value");
+        asserter.gt(cells.length, 0, "unexpected cells array size");
+
+        for (int i=0; i<cells.length; i++)
+        {
+            asserter.eq(cells[i].isActive, true, "unexpected cell isActive value");
+        }
+
+        grid.flush();
+        cells = grid.cells;
+        asserter.notNull(cells, "unexpected cells array value");
+        asserter.gt(cells.length, 0, "unexpected cells array size");
+
+        for (int i=0; i<cells.length; i++)
+        {
+            asserter.eq(cells[i].isActive, false, "unexpected cell isActive value");
+        }
     }
 
     public void test_getActiveCells() throws Exception
     {
-        throw new Exception("not yet implemented");
+        Grid grid = new Grid(9, 3);
+        grid.setCells(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+        int[] actives = grid.getActiveCells();
+        for (int i=0; i<actives.length; i++)
+        {
+            asserter.eq(actives[i], 0, "unexpected cell isActive value");
+        }
+
+        grid.setCells(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1});
+        actives = grid.getActiveCells();
+        for (int i=0; i<actives.length; i++)
+        {
+            asserter.eq(actives[i], 1, "unexpected cell isActive value");
+        }
     }
 
-    public void test_fill_grid() throws Exception
+    public void test_setCells() throws Exception
     {
-        throw new Exception("not yet implemented");
+        Grid grid = new Grid(9, 3);
+        grid.setCells(new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1});
+
+        Cell[] cells = grid.cells;
+        asserter.notNull(cells, "unexpected cells array value");
+        asserter.gt(cells.length, 0, "unexpected cells array size");
+
+        for (int i=0; i<cells.length; i++)
+        {
+            asserter.eq(cells[i].isActive, true, "unexpected cell isActive value");
+        }
     }
 
-    public void test_fill_indices() throws Exception
+    public void test_setCellsByIndices() throws Exception
     {
-        throw new Exception("not yet implemented");
+        Grid grid = new Grid(9, 3);
+        grid.setCells(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
+        grid.setCellsByIndices(new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8});
+
+        Cell[] cells = grid.cells;
+        asserter.notNull(cells, "unexpected cells array value");
+        asserter.gt(cells.length, 0, "unexpected cells array size");
+
+        for (int i=0; i<cells.length; i++)
+        {
+            asserter.eq(cells[i].isActive, true, "unexpected cell isActive value");
+        }
     }
 
     public void test_update() throws Exception
     {
-        throw new Exception("not yet implemented");
+        Grid grid = new Grid(9, 3);
+        grid.setCells(new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0});
+
+        Cell[] cells = grid.cells;
+        asserter.notNull(cells, "unexpected cells array value");
+        asserter.gt(cells.length, 0, "unexpected cells array size");
+
+        for (int i=0; i<cells.length; i++)
+        {
+            asserter.eq(cells[i].isActive, false, "unexpected cell isActive value");
+        }
+
+        for (int j=0; j<3; j++)
+        {
+            for (int k=0; k<3; k++)
+            {
+                grid.update(j*3, k*3, true, LEFT);
+            }
+        }
+
+        cells = grid.cells;
+        asserter.notNull(cells, "unexpected cells array value");
+        asserter.gt(cells.length, 0, "unexpected cells array size");
+
+        for (int i=0; i<cells.length; i++)
+        {
+            asserter.eq(cells[i].isActive, true, "unexpected cell isActive value");
+        }
     }
 }
 
@@ -196,11 +276,40 @@ public class TestCell extends TestBase
 
     public void test_update() throws Exception
     {
-        throw new Exception("not yet implemented");
+        int cellSize = 30;
+        Cell c = new Cell(0, 0, 0, cellSize);
+        asserter.eq(c.isActive, false, "unexpected isAcitve value");
+        for (int i=0; i<cellSize; i++)
+        {
+            for (int j=0; j<cellSize; j++)
+            {
+                c.update(i, j, true, LEFT);
+                asserter.eq(c.isActive, true, "unexpected isActive value");
+                c.isActive = false;
+            }
+        }
     }
 
     public void test_mouseOver() throws Exception
     {
-        throw new Exception("not yet implemented");
+        int cellSize = 30;
+        Cell c = new Cell(0, 0, 0, cellSize);
+
+        for (int i=0; i<cellSize; i++)
+        {
+            for (int j=0; j<cellSize; j++)
+            {
+                asserter.eq(c.mouseOver(i, j), true, "unexpected mouseOver value");
+            }
+        }
+
+        asserter.eq(c.mouseOver(-1, 0), false, "unexpected mouseOver value");
+        asserter.eq(c.mouseOver(0, -1), false, "unexpected mouseOver value");
+
+        asserter.eq(c.mouseOver(cellSize+1, 0), false, "unexpected mouseOver value");
+        asserter.eq(c.mouseOver(0, cellSize+1), false, "unexpected mouseOver value");
+
+        asserter.eq(c.mouseOver(cellSize+1, cellSize+1), false, "unexpected mouseOver value");
+        asserter.eq(c.mouseOver(cellSize+1, cellSize+1), false, "unexpected mouseOver value");
     }
 }

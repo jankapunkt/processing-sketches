@@ -12,14 +12,14 @@ void setup()
     println("create new grid: "+grid.cells.length);
 
     //uncomment if not testing
-    runTests();
+    //runTests();
 }
 
 
 void draw()
 {
     background(50);
-    grid.update();
+    grid.update(mouseX, mouseY, mousePressed, mouseButton);
     grid.display();
 }
 
@@ -29,20 +29,44 @@ void keyPressed()
     switch(key)
     {
     case ENTER:
-        grid.fill_grid(generate_gameOfLife(grid.getActiveCells(), CELLS));
+        try 
+        {
+            grid.setCells(generate_gameOfLife(grid.getActiveCells(), CELLS));
+        }
+        catch(Exception e) {
+            //write to log
+        }
         break;
     case 'f':
         grid.flush();
         break;
     case 'd':
-        grid.fill_indices(generate_drunkardWalk(20, 10, 300, CELLS, false));
+        try
+        {
+            grid.setCellsByIndices(generate_drunkardWalk(20, 10, 300, CELLS, false));
+        }
+        catch(Exception e) {
+            //write to log
+        }
         break;
     case 'r':
-        grid.fill_indices(generate_random(10, CELLS));
+        try
+        {
+            grid.setCellsByIndices(generate_random(10, CELLS));
+        }
+        catch(Exception e) {
+            //write to log
+        }
         break;
 
     case 'c':
-        grid.fill_indices(generate_cellularCave(CELLS));
+        try
+        {
+            grid.setCellsByIndices(generate_cellularCave(CELLS));
+        }
+        catch(Exception e) {
+            //write to log
+        }
         break;
     }
 }
@@ -59,5 +83,5 @@ private void runTests()
     tg.run(TestGrid.class);
 
     TestCell tc = new TestCell();
-    tg.run(TestCell.class);
+    tc.run(TestCell.class);
 }
