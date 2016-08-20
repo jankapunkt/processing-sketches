@@ -1,139 +1,206 @@
 class Grid
 {
-   public final Cell[] cells;
-   public final int gridSize;
-   public final int halfSize;
-   
-   public Grid(int screenSize, int halfSize)
-   {
-      this.halfSize = halfSize;
-      gridSize = halfSize*halfSize;
-      cells = new Cell[gridSize];
-      for(int i=0;i<gridSize;i++)
-      {
-         cells[i] = new Cell(i , floor(i / halfSize), i % halfSize, screenSize/halfSize);
-      }
-   }
-   
-   public void flush()
-   {
-      for(int i=0;i<gridSize;i++)
-      {
-         cells[i].isActive = false; 
-      }
-   }
-   
-   public int[] getActiveCells()
-   {
-      int[] result = new int[gridSize];
-      for (int i=0;i<gridSize;i++)
-      {
-         result[i] = cells[i].isActive ? 1 : 0; 
-      }
-      return result;
-   }
-   
-   public void fill_grid(int[] source)
-   {
-      for(int i=0;i<gridSize;i++)
-      {
-         cells[i].isActive = source[i] == 1 ? true : false; 
-      }
-   }
-   
-   public void fill_indices(int[] source)
-   {
-       for(int i=0;i<source.length;i++)
-       {
-          int idx = source[i];
-          if (idx >= 0 && idx <= gridSize-1)
-              cells[idx].isActive = true; 
-       }
-   }
-   
-   public void update()
-   {
-      float x = mouseX;
-      float y = mouseY;
-      for (int i=0;i<gridSize;i++)
-      {
-          Cell c = cells[i];
-          if(!started)
-          {
-              c.update(x,y);
-          }else{
-              
-            
-          }
-      }
-   }
-   
-   public void display()
-   {
-      for (int i=0;i<gridSize;i++)
-      {
-          cells[i].display();
-      }
-   }
+    public final Cell[] cells;
+    public final int gridSize;
+    public final int halfSize;
+
+    public Grid(int screenSize, int halfSize)
+    {
+        this.halfSize = halfSize;
+        gridSize = halfSize*halfSize;
+        cells = new Cell[gridSize];
+        for (int i=0; i<gridSize; i++)
+        {
+            cells[i] = new Cell(i, floor(i / halfSize), i % halfSize, screenSize/halfSize);
+        }
+    }
+
+    public void flush()
+    {
+        for (int i=0; i<gridSize; i++)
+        {
+            cells[i].isActive = false;
+        }
+    }
+
+    public int[] getActiveCells()
+    {
+        int[] result = new int[gridSize];
+        for (int i=0; i<gridSize; i++)
+        {
+            result[i] = cells[i].isActive ? 1 : 0;
+        }
+        return result;
+    }
+
+    public void fill_grid(int[] source)
+    {
+        for (int i=0; i<gridSize; i++)
+        {
+            cells[i].isActive = source[i] == 1 ? true : false;
+        }
+    }
+
+    public void fill_indices(int[] source)
+    {
+        for (int i=0; i<source.length; i++)
+        {
+            int idx = source[i];
+            if (idx >= 0 && idx <= gridSize-1)
+                cells[idx].isActive = true;
+        }
+    }
+
+
+    public void update()
+    {
+        float x = mouseX;
+        float y = mouseY;
+        for (int i=0; i<gridSize; i++)
+        {
+            Cell c = cells[i];
+            if (!started)
+            {
+                c.update(x, y);
+            } else {
+            }
+        }
+    }
+
+    public void display()
+    {
+        for (int i=0; i<gridSize; i++)
+        {
+            cells[i].display();
+        }
+    }
 }
 
 
 
 class Cell
 {
-  public final int index;
-  public final int xindex;
-  public final int yindex;
-  public final int csize;
-  
-  public final int xpos;
-  public final int ypos;
-  
-  public boolean over;
-  public boolean isCandidate;
-  public boolean isActive;
-  
-  private int col=50;
-  
-  public Cell(int cellIndex, int xindex, int yindex, int csize)
-  {
-    this.index = cellIndex;
-    this.xindex = xindex;
-    this.yindex = yindex;
-    this.csize = csize;
-    this.xpos = xindex*csize;
-    this.ypos = yindex*csize;
-  }
-  
-  public void update(float x, float y)
-  {
-     over = mouseOver(x,y);
-     if (over && mousePressed )
-     {
-        isActive = mouseButton == LEFT ? true : false;
-     }
-  }
-  
-  private boolean mouseOver(float x, float y)
-  {
-     return  x >= xpos && x < xpos + csize &&
-             y >= ypos && y < ypos + csize;
-  }
-    
-  public void display()
-  {
-     if (isActive || over)
-     {
-        col = 200; 
-     }else if(col > 50){
-        //col-=10;
-        col=50;
-     }
-     pushMatrix();
-       translate(xpos, ypos);
-       fill(col);
-       stroke(200);
-       rect(0,0,csize,csize);
-      popMatrix();
-  }
+    public final int index;
+    public final int xindex;
+    public final int yindex;
+    public final int csize;
+
+    public final int xpos;
+    public final int ypos;
+
+    public boolean over;
+    public boolean isCandidate;
+    public boolean isActive;
+
+    private int col=50;
+
+    public Cell(int cellIndex, int xindex, int yindex, int csize)
+    {
+        this.index = cellIndex;
+        this.xindex = xindex;
+        this.yindex = yindex;
+        this.csize = csize;
+        this.xpos = xindex*csize;
+        this.ypos = yindex*csize;
+    }
+
+    public void update(float x, float y)
+    {
+        over = mouseOver(x, y);
+        if (over && mousePressed )
+        {
+            isActive = mouseButton == LEFT ? true : false;
+        }
+    }
+
+    private boolean mouseOver(float x, float y)
+    {
+        return  x >= xpos && x < xpos + csize &&
+            y >= ypos && y < ypos + csize;
+    }
+
+    public void display()
+    {
+        if (isActive || over)
+        {
+            col = 200;
+        } else if (col > 50) {
+            //col-=10;
+            col=50;
+        }
+        pushMatrix();
+        translate(xpos, ypos);
+        fill(col);
+        stroke(200);
+        rect(0, 0, csize, csize);
+        popMatrix();
+    }
+}
+
+
+//-------------------------------------------------------------------------
+//
+//
+//    TEST GRID
+//
+//
+//-------------------------------------------------------------------------
+
+public class TestGrid extends TestBase
+{
+    public TestGrid()
+    {
+        //empty
+    }
+
+    public void test_flush() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+
+    public void test_getActiveCells() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+
+    public void test_fill_grid() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+
+    public void test_fill_indices() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+
+    public void test_update() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+}
+
+//-------------------------------------------------------------------------
+//
+//
+//    TEST CELL
+//
+//
+//-------------------------------------------------------------------------
+
+public class TestCell extends TestBase
+{
+    public TestCell()
+    {
+        //empty
+    }
+
+    public void test_update() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+
+    public void test_mouseOver() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
 }
