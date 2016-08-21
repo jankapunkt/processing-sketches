@@ -1,4 +1,4 @@
-
+ //<>//
 /**
  Generates one iteration step of conway's game of life by the following rules:
  1.Any live cell with fewer than two live neighbours dies, as if caused by under-population.
@@ -152,7 +152,6 @@ public static int[] generate_random(int percent, int gridSize)
 {
     float propability = percent/100f;
     int[] result = new int[(int)(gridSize*gridSize*propability)];
-    println("[getRandom]: %="+percent+" size="+gridSize+" p="+propability+" res="+result.length);
     int count = 0;
     int len = gridSize*gridSize;
     for (int i=0; i<len; i++)
@@ -237,4 +236,50 @@ public static int[] cellularIteration(int[] source, int[] results, int iteration
         }
     }
     return results;
+}
+
+//-------------------------------------------------------------------------
+//
+//
+//    TEST GENERATION
+//
+//
+//-------------------------------------------------------------------------
+
+class TestGeneration extends TestBase
+{
+    public TestGeneration() 
+    {
+        //empty
+    }   
+
+    public void test_generate_cellularCave() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+
+    public void test_cellularIteration() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+
+    public void test_generate_random() throws Exception
+    {
+        for (int i=0; i<101; i++) 
+        {
+            int[] randArr = generate_random(i, 100);
+            asserter.notNull(randArr, "unexpected null result");
+            asserter.lt(randArr.length, i+1, "unexpected array length");
+        }
+    }
+
+    public void test_generate_drunkardWalk() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
+
+    public void test_generate_gameOfLife() throws Exception
+    {
+        throw new Exception("not yet implemented");
+    }
 }

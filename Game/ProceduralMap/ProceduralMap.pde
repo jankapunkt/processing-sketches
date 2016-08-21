@@ -12,7 +12,7 @@ void setup()
     println("create new grid: "+grid.cells.length);
 
     //uncomment if not testing
-    //runTests();
+    runTests();
 }
 
 
@@ -84,4 +84,7 @@ private void runTests()
 
     TestCell tc = new TestCell();
     tc.run(TestCell.class);
+    
+    TestGeneration tgen = new TestGeneration();
+    tgen.run(TestGeneration.class);
 }
