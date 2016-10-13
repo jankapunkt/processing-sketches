@@ -1,3 +1,5 @@
+import java.lang.reflect.*;
+import java.math.BigDecimal;
 
 public Grid grid;
 public boolean started=false;
@@ -5,40 +7,84 @@ public boolean started=false;
 
 void setup()
 {
-  size(600, 600, P2D); 
-  grid = new Grid(SIZE, CELLS);
-  println("create new grid: "+grid.cells.length);
-  
+    size(600, 600, P2D); 
+    grid = new Grid(SIZE, CELLS);
+    println("create new grid: "+grid.cells.length);
+
+    //uncomment if not testing
+    runTests();
 }
 
 
 void draw()
 {
-  background(50);
-  grid.update();
-  grid.display();
+    background(50);
+    grid.update(mouseX, mouseY, mousePressed, mouseButton);
+    grid.display();
 }
 
 
 void keyPressed()
 {
-  switch(key)
-  {
+    switch(key)
+    {
     case ENTER:
-      grid.fill_grid(generate_gameOfLife(grid.getActiveCells(), CELLS));
-      break;
+        try 
+        {
+            grid.setCells(generate_gameOfLife(grid.getActiveCells(), CELLS));
+        }
+        catch(Exception e) {
+            //write to log
+        }
+        break;
     case 'f':
-      grid.flush();
-      break;
+        grid.flush();
+        break;
     case 'd':
-      grid.fill_indices(generate_drunkardWalk(20, 10, 300, CELLS,false));
-      break;
+        try
+        {
+            grid.setCellsByIndices(generate_drunkardWalk(20, 10, 300, CELLS, false));
+        }
+        catch(Exception e) {
+            //write to log
+        }
+        break;
     case 'r':
-      grid.fill_indices(generate_random(10,CELLS));
-      break;
-      
+        try
+        {
+            grid.setCellsByIndices(generate_random(10, CELLS));
+        }
+        catch(Exception e) {
+            //write to log
+        }
+        break;
+
     case 'c':
-      grid.fill_indices(generate_cellularCave(CELLS));
-      break;
-  }
+        try
+        {
+            grid.setCellsByIndices(generate_cellularCave(CELLS));
+        }
+        catch(Exception e) {
+            //write to log
+        }
+        break;
+    }
+}
+
+
+private void runTests()
+{
+    noLoop();
+
+    TestUtils tu = new TestUtils();
+    tu.run(TestUtils.class);
+
+    TestGrid tg = new TestGrid();
+    tg.run(TestGrid.class);
+
+    TestCell tc = new TestCell();
+    tc.run(TestCell.class);
+    
+    TestGeneration tgen = new TestGeneration();
+    tgen.run(TestGeneration.class);
 }

@@ -33,6 +33,8 @@ class IconosphericCameraController extends CameraController
         zoomp = 0.08f;
         mouse_threshold = 50;
         cam.setMode(Cam.MODE_PERSPECTIVE);
+        
+        cursor(HAND);
     }
 
     @Override
