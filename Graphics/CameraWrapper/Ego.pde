@@ -33,7 +33,7 @@ class EgoCameraController extends CameraController
     }
 
     @Override
-        public void updateKeys()
+    public void updateKeys()
     {
         if (!keyPressed)return;
         moveDir.set(0, 0, 0);
@@ -73,7 +73,7 @@ class EgoCameraController extends CameraController
     }
 
     @Override
-        public void updateMouse()
+    public void updateMouse()
     {
         if (mousePressed && mouseButton == LEFT)
         {

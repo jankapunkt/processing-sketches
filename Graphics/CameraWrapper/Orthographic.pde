@@ -29,12 +29,8 @@ class OrthographicCameraController extends CameraController
     }
 
     @Override
-        public void updateKeys()
-    {
-    }
+    public void updateKeys(){}
 
     @Override
-        public void updateMouse()
-    {
-    }
+    public void updateMouse(){}
 }

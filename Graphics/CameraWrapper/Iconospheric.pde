@@ -20,7 +20,7 @@ class IconosphericCameraController extends CameraController
     @Override
     public void setDefaults()
     {
-        cursor(); //display cursor in iconospheric view
+        cursor(HAND); //display cursor in iconospheric view
         
         //set default vectors
         this.up.set(cam.getUp());

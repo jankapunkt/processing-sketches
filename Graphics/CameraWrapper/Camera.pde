@@ -265,11 +265,22 @@ class Cam
             eyeVec.z);
     }
 
+    
 
     /* Rotates the camera around given point by a given axis and angle */
     public void rotAround(PVector target, PVector axis, float angle)
     {
         eyeVec.set(rotAny(eyeVec, TWO_PI * angle, target, axis));
+    }
+    
+    public void rotAroundLeft(float angle)
+    {
+        eyeVec.set(rotAny(eyeVec, TWO_PI * angle, cenVec, getLeft()));
+    }
+    
+    public void rotAroundRight(float angle)
+    {
+        eyeVec.set(rotAny(eyeVec, TWO_PI * angle, cenVec, getRight()));
     }
 
     /* Rotates the camera around itself by a given axis and angle */
